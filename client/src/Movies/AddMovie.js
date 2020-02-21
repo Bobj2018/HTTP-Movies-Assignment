@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 
 //import { Test } from './UpdateMovie.styles';
 import axios from "axios";
-import { useState } from "react";
 
-const UpdateMovie = props => {
-	console.log("UpdateMovie: ", props);
-	const url = `http://localhost:5000/api/movies/${props.match.params.id}`;
-	const [movie, setMovie] = useState({});
+const AddMovie = props => {
+	const url = `http://localhost:5000/api/movies/`;
+	const [movie, setMovie] = useState({ stars: ["test"] });
 
 	function handleChange(e) {
 		setMovie({
@@ -19,20 +17,9 @@ const UpdateMovie = props => {
 	function handleSubmit(e) {
 		e.preventDefault();
 		axios
-			.put(url, movie)
+			.post(url, movie)
 			.then(res => props.history.push("/"))
 			.catch(err => console.error(err));
-	}
-
-	useEffect(() => {
-		fetchMovie();
-	}, []);
-
-	function fetchMovie() {
-		axios
-			.get(url)
-			.then(res => setMovie(res.data))
-			.then(err => console.error(err));
 	}
 
 	return (
@@ -66,4 +53,4 @@ const UpdateMovie = props => {
 	);
 };
 
-export default UpdateMovie;
+export default AddMovie;
